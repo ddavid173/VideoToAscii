@@ -2,6 +2,7 @@ import os
 import time
 import cv2
 import numpy as np
+from Frames import frame
 
 def greyscale(r, g, b):
     return 0.21 * r + 0.72 * g + 0.07 * b
@@ -18,7 +19,8 @@ def toAscii(frames):
             for x in range(len(frames[frame])):
                 asciiFrames[frame].append([])
                 for y in frames[frame][x]:
-                    asciiFrames[frame][x].append(asciiConversion[int(greyscale(y[0],y[1],y[2]) / 42)])
+                    ascii = asciiConversion[int(greyscale(y[0],y[1],y[2]) / 42)]
+                    asciiFrames[frame][x].append(ascii)
     return asciiFrames
 
 def outputArt(frames, fps):
@@ -38,7 +40,7 @@ def outputArt(frames, fps):
         time.sleep(1/fps/2)
     f.close()
 
-def videoConvert(inputDir, outputDir):
+def videoConvert(inputDir):
     # Start capturing the feed
     cap = cv2.VideoCapture(inputDir)
     # Find the number of frames
@@ -67,9 +69,10 @@ def videoConvert(inputDir, outputDir):
             return frames, video_length
 
 if __name__=="__main__":
-    input = "C:\\Users\\delga\\Desktop\\classes\Practice\\VideoToAscii\\Bank.mp4"
-    output = "C:\\Users\\delga\\Desktop\\classes\\Practice\\VideoToAscii\\Videos"
-    frames, video_length = videoConvert(input, output)
+    running = True
+    #while running:
+    input = input('Where is your Video stored?\n(use two backslash for a single backslash)')
+    frames, video_length = videoConvert(input)
     framesAscii = toAscii(frames)
     outputArt(framesAscii, int(video_length / 30))
     print('el fin')
