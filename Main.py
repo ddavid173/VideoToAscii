@@ -26,7 +26,7 @@ def outputArt(frames, fps):
     f = open('C:\\Users\\delga\\Desktop\\classes\\Practice\\VideoToAscii\\Renders\\Rendered.txt', 'w')
     for frame in range(len(frames)):
         string = ''
-        for x in range(len(frames[0]) - 40):
+        for x in range(len(frames[0])):
             for y in range(len(frames[0][0])):
                 f.write(str(frames[frame][x][y]))
                 string += str(frames[frame][x][y])
@@ -53,7 +53,7 @@ def videoConvert(inputDir, outputDir):
         ret, frame = cap.read()
         if not ret:
             continue
-        frame = cv2.resize(frame,(120,100),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)
+        frame = cv2.resize(frame,(140,60),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)
         frames.append(frame)
         count = count + 1
         # If there are no more frames left
@@ -67,7 +67,7 @@ def videoConvert(inputDir, outputDir):
             return frames, video_length
 
 if __name__=="__main__":
-    input = "C:\\Users\\delga\\Desktop\\classes\\Practice\\VideoToAscii\\Shipping_5s.mp4"
+    input = "C:\\Users\\delga\\Desktop\\classes\Practice\\VideoToAscii\\Bank.mp4"
     output = "C:\\Users\\delga\\Desktop\\classes\\Practice\\VideoToAscii\\Videos"
     frames, video_length = videoConvert(input, output)
     framesAscii = toAscii(frames)
