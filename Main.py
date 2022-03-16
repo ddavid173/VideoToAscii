@@ -26,17 +26,16 @@ def outputArt(frames, fps):
     f = open('C:\\Users\\delga\\Desktop\\classes\\Practice\\VideoToAscii\\Renders\\Rendered.txt', 'w')
     for frame in range(len(frames)):
         string = ''
-        for x in range(len(frames[0])):
-        
+        for x in range(len(frames[0]) - 40):
             for y in range(len(frames[0][0])):
                 f.write(str(frames[frame][x][y]))
                 string += str(frames[frame][x][y])
             string += '\n'
             f.write('\n')
-        os.system('CLS')
+        #os.system('CLS')
         print(string + '\n')
         f.write('\n')
-        time.sleep(1/fps)
+        time.sleep(1/fps/2)
     f.close()
 
 def videoConvert(inputDir, outputDir):
@@ -54,7 +53,7 @@ def videoConvert(inputDir, outputDir):
         ret, frame = cap.read()
         if not ret:
             continue
-        frame = cv2.resize(frame,(120,120),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)
+        frame = cv2.resize(frame,(120,100),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)
         frames.append(frame)
         count = count + 1
         # If there are no more frames left
@@ -71,6 +70,6 @@ if __name__=="__main__":
     input = "C:\\Users\\delga\\Desktop\\classes\\Practice\\VideoToAscii\\Shipping_5s.mp4"
     output = "C:\\Users\\delga\\Desktop\\classes\\Practice\\VideoToAscii\\Videos"
     frames, video_length = videoConvert(input, output)
-    frames = toAscii(frames)
-    outputArt(frames, int(video_length / 30))
+    framesAscii = toAscii(frames)
+    outputArt(framesAscii, int(video_length / 30))
     print('el fin')
