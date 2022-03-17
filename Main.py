@@ -2,26 +2,19 @@ import os
 import time
 import cv2
 import numpy as np
-from Frames import frame
+from Frame import frame as frameClass
 
 def greyscale(r, g, b):
     return 0.21 * r + 0.72 * g + 0.07 * b
 
-def toAscii(frames):
-    print('Converting to ascii...')
-    asciiConversion = [' ', '.','o', 'O','0','&','@']
-    asciiFrames = []
-    for frame in range(len(frames)):
-        if frame > 0 and np.array_equal(frames[frame], frames[frame - 1]):
-            asciiFrames.append(asciiFrames[frame - 1])
-        else:
-            asciiFrames.append([])
-            for x in range(len(frames[frame])):
-                asciiFrames[frame].append([])
-                for y in frames[frame][x]:
-                    ascii = asciiConversion[int(greyscale(y[0],y[1],y[2]) / 42)]
-                    asciiFrames[frame][x].append(ascii)
-    return asciiFrames
+def render(frames):
+    for frame in frames:
+        frame.render()
+
+def printVideo(frames, waitTime):
+    for frame in frames:
+        print(frame)
+        time.sleep(waitTime)
 
 def outputArt(frames, fps):
     print('Printing results...')
@@ -56,7 +49,8 @@ def videoConvert(inputDir):
         if not ret:
             continue
         frame = cv2.resize(frame,(140,60),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)
-        frames.append(frame)
+        frameOBJ = frameClass(frame)
+        frames.append(frameOBJ)
         count = count + 1
         # If there are no more frames left
         if (count > (video_length-1)):
@@ -73,6 +67,10 @@ if __name__=="__main__":
     #while running:
     input = input('Where is your Video stored?\n(use two backslash for a single backslash)')
     frames, video_length = videoConvert(input)
-    framesAscii = toAscii(frames)
-    outputArt(framesAscii, int(video_length / 30))
-    print('el fin')
+    waitTime = 5 / video_length
+    frames[0].render()
+    render(frames)
+    printVideo(frames, waitTime)
+    #framesAscii = toAscii(frames)
+    #outputArt(framesAscii, int(video_length / 30))
+    #print('el fin')

@@ -6,6 +6,7 @@ class frame(object):
         self.ascii = []
         asciiConversion = [' ', '.','o', 'O','0','&','@']
         for x in range(len(rgb)):
+            self.grey.append([])
             self.ascii.append([])
             for y in rgb[x]:
                 greys = int(0.21 * y[0] + 0.72 * y[1] + 0.07 * y[2])
