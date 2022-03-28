@@ -65,12 +65,13 @@ def videoConvert(inputDir):
 if __name__=="__main__":
     running = True
     #while running:
-    input = input('Where is your Video stored?\n(use two backslash for a single backslash)')
-    frames, video_length = videoConvert(input)
+    # input = input('Where is your Video stored?\n(use two backslash for a single backslash)')
+    frames, video_length = videoConvert("C:\\Users\\delga\\Downloads\\ezgif.com-gif-maker.mp4")
     waitTime = 5 / video_length
     frames[0].render()
     render(frames)
     printVideo(frames, waitTime)
+    outputArt(frames, waitTime)
     #framesAscii = toAscii(frames)
     #outputArt(framesAscii, int(video_length / 30))
     #print('el fin')
